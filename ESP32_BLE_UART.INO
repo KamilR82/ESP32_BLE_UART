@@ -8,7 +8,10 @@
 BLECharacteristic *pTxCharacteristic;
 BLECharacteristic *pRxCharacteristic;
 
-const char *BLE_UART_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";  // https://www.uuidgenerator.net/
+//Nordic nRF:
+const char *BLE_UART_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";//Bluetooth LE GATT UUIDs for the Nordic UART profile
+const char *BLE_RX_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";//Nordic UART Service write
+const char *BLE_TX_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";//Nordic UART Service notify
 
 bool BLEclientConnected = false;
 
@@ -57,8 +60,8 @@ void BLEbegin() {
   BLEService *pService = pServer->createService(BLEUUID(BLE_UART_UUID));
 
   // Create a BLE Characteristic
-  pRxCharacteristic = pService->createCharacteristic(BLEUUID(BLE_UART_UUID), BLECharacteristic::PROPERTY_WRITE);
-  pTxCharacteristic = pService->createCharacteristic(BLEUUID(BLE_UART_UUID), BLECharacteristic::PROPERTY_NOTIFY);  // | BLECharacteristic::PROPERTY_READ
+  pRxCharacteristic = pService->createCharacteristic(BLEUUID(BLE_RX_UUID), BLECharacteristic::PROPERTY_WRITE);
+  pTxCharacteristic = pService->createCharacteristic(BLEUUID(BLE_TX_UUID), BLECharacteristic::PROPERTY_NOTIFY);  // | BLECharacteristic::PROPERTY_READ
 
   // Create a BLE Descriptor 0x2902: Client Characteristic Configuration Descriptor (CCCD)
   pTxCharacteristic->addDescriptor(new BLE2902());
